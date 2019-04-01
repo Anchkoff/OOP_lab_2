@@ -63,6 +63,12 @@
             this.listBoxInfo = new System.Windows.Forms.ListBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.buttonClear = new System.Windows.Forms.Button();
+            this.radioButtonBinary = new System.Windows.Forms.RadioButton();
+            this.radioButtonXml = new System.Windows.Forms.RadioButton();
+            this.radioButtonFree = new System.Windows.Forms.RadioButton();
+            this.buttonSerialize = new System.Windows.Forms.Button();
+            this.label10 = new System.Windows.Forms.Label();
+            this.buttonDeserialize = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -110,9 +116,9 @@
             // 
             // buttonAdd
             // 
-            this.buttonAdd.Location = new System.Drawing.Point(447, 272);
+            this.buttonAdd.Location = new System.Drawing.Point(12, 362);
             this.buttonAdd.Name = "buttonAdd";
-            this.buttonAdd.Size = new System.Drawing.Size(206, 47);
+            this.buttonAdd.Size = new System.Drawing.Size(206, 30);
             this.buttonAdd.TabIndex = 1;
             this.buttonAdd.Text = "Добавить работника";
             this.buttonAdd.UseVisualStyleBackColor = true;
@@ -120,9 +126,9 @@
             // 
             // buttonDelete
             // 
-            this.buttonDelete.Location = new System.Drawing.Point(447, 164);
+            this.buttonDelete.Location = new System.Drawing.Point(447, 165);
             this.buttonDelete.Name = "buttonDelete";
-            this.buttonDelete.Size = new System.Drawing.Size(206, 52);
+            this.buttonDelete.Size = new System.Drawing.Size(206, 30);
             this.buttonDelete.TabIndex = 2;
             this.buttonDelete.Text = "Удалить работника";
             this.buttonDelete.UseVisualStyleBackColor = true;
@@ -130,9 +136,9 @@
             // 
             // buttonEdit
             // 
-            this.buttonEdit.Location = new System.Drawing.Point(447, 219);
+            this.buttonEdit.Location = new System.Drawing.Point(228, 362);
             this.buttonEdit.Name = "buttonEdit";
-            this.buttonEdit.Size = new System.Drawing.Size(206, 47);
+            this.buttonEdit.Size = new System.Drawing.Size(206, 30);
             this.buttonEdit.TabIndex = 3;
             this.buttonEdit.Text = "Подтвердить изменения";
             this.buttonEdit.UseVisualStyleBackColor = true;
@@ -364,19 +370,86 @@
             // 
             // buttonClear
             // 
-            this.buttonClear.Location = new System.Drawing.Point(447, 325);
+            this.buttonClear.Location = new System.Drawing.Point(447, 201);
             this.buttonClear.Name = "buttonClear";
-            this.buttonClear.Size = new System.Drawing.Size(206, 31);
+            this.buttonClear.Size = new System.Drawing.Size(206, 30);
             this.buttonClear.TabIndex = 32;
             this.buttonClear.Text = "Очистить поля";
             this.buttonClear.UseVisualStyleBackColor = true;
             this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
             // 
+            // radioButtonBinary
+            // 
+            this.radioButtonBinary.AutoSize = true;
+            this.radioButtonBinary.Checked = true;
+            this.radioButtonBinary.Location = new System.Drawing.Point(447, 259);
+            this.radioButtonBinary.Name = "radioButtonBinary";
+            this.radioButtonBinary.Size = new System.Drawing.Size(73, 17);
+            this.radioButtonBinary.TabIndex = 33;
+            this.radioButtonBinary.TabStop = true;
+            this.radioButtonBinary.Text = "бинарная";
+            this.radioButtonBinary.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonXml
+            // 
+            this.radioButtonXml.AutoSize = true;
+            this.radioButtonXml.Location = new System.Drawing.Point(447, 281);
+            this.radioButtonXml.Name = "radioButtonXml";
+            this.radioButtonXml.Size = new System.Drawing.Size(47, 17);
+            this.radioButtonXml.TabIndex = 34;
+            this.radioButtonXml.Text = "XML";
+            this.radioButtonXml.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonFree
+            // 
+            this.radioButtonFree.AutoSize = true;
+            this.radioButtonFree.Location = new System.Drawing.Point(447, 303);
+            this.radioButtonFree.Name = "radioButtonFree";
+            this.radioButtonFree.Size = new System.Drawing.Size(97, 17);
+            this.radioButtonFree.TabIndex = 35;
+            this.radioButtonFree.Text = "произвольная";
+            this.radioButtonFree.UseVisualStyleBackColor = true;
+            // 
+            // buttonSerialize
+            // 
+            this.buttonSerialize.Location = new System.Drawing.Point(447, 326);
+            this.buttonSerialize.Name = "buttonSerialize";
+            this.buttonSerialize.Size = new System.Drawing.Size(206, 30);
+            this.buttonSerialize.TabIndex = 36;
+            this.buttonSerialize.Text = "Сериализовать";
+            this.buttonSerialize.UseVisualStyleBackColor = true;
+            this.buttonSerialize.Click += new System.EventHandler(this.buttonSerialize_Click);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(444, 243);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(104, 13);
+            this.label10.TabIndex = 37;
+            this.label10.Text = "Вид сериализации:";
+            // 
+            // buttonDeserialize
+            // 
+            this.buttonDeserialize.Location = new System.Drawing.Point(447, 362);
+            this.buttonDeserialize.Name = "buttonDeserialize";
+            this.buttonDeserialize.Size = new System.Drawing.Size(206, 30);
+            this.buttonDeserialize.TabIndex = 38;
+            this.buttonDeserialize.Text = "Загрузить";
+            this.buttonDeserialize.UseVisualStyleBackColor = true;
+            this.buttonDeserialize.Click += new System.EventHandler(this.buttonDeserialize_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(665, 363);
+            this.ClientSize = new System.Drawing.Size(664, 404);
+            this.Controls.Add(this.buttonDeserialize);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.buttonSerialize);
+            this.Controls.Add(this.radioButtonFree);
+            this.Controls.Add(this.radioButtonXml);
+            this.Controls.Add(this.radioButtonBinary);
             this.Controls.Add(this.buttonClear);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.listBoxInfo);
@@ -453,6 +526,12 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnDateOfBirth;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnAddress;
         private System.Windows.Forms.Button buttonClear;
+        private System.Windows.Forms.RadioButton radioButtonBinary;
+        private System.Windows.Forms.RadioButton radioButtonXml;
+        private System.Windows.Forms.RadioButton radioButtonFree;
+        private System.Windows.Forms.Button buttonSerialize;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Button buttonDeserialize;
     }
 }
 

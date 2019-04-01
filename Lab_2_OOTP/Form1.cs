@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 
 namespace Lab_2_OOTP
 {
@@ -270,14 +273,11 @@ namespace Lab_2_OOTP
                 RestaurantWorker worker = getWorkerTypeByString(comboBoxProfession.Text.ToString(), textBoxName.Text, textBoxSurname.Text, dateTimePicker1.Value, textBoxPhone.Text, currAddr, Convert.ToDouble(textBoxSalary.Text), firstParam, textBoxSecond.Text, checkBoxSwear.Checked);
                 Workers.Add(worker);
                 dataGridAndAllListsUpdate();
-
             }
             else
             {
                 MessageBox.Show("Заполните все поля!");
             }
-
-            
         }
 
         private void textBoxBuilding_KeyPress(object sender, KeyPressEventArgs e)
@@ -333,6 +333,121 @@ namespace Lab_2_OOTP
         private void buttonClear_Click(object sender, EventArgs e)
         {
             ClearTextBoxes();
+        }
+
+        private void buttonSerialize_Click(object sender, EventArgs e)
+        {
+            if (radioButtonBinary.Checked)
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                using (FileStream fs = new FileStream("workers.dat", FileMode.OpenOrCreate))
+                {
+                    formatter.Serialize(fs, Workers);
+                }
+            }
+            else if (radioButtonXml.Checked)
+            {
+                XmlSerializer formatter = new XmlSerializer(typeof(List<RestaurantWorker>), new Type[] { typeof(Waiter), typeof(Manager), typeof(Chief), typeof(Cook) });
+                using (FileStream fs = new FileStream("workers.xml", FileMode.OpenOrCreate))
+                {
+                    formatter.Serialize(fs, Workers);
+                }
+            }
+            if (radioButtonFree.Checked)
+            {
+                string text = "";
+                for (int i = 0; i < Workers.Count; i++)
+                {
+
+                    if (Workers[i] is Waiter)
+                    {
+                        Waiter curr = Workers[i] as Waiter;
+                        text += $"'Официант'|'{curr.Surname}'|'{curr.Name}'|'{curr.Phone}'|'{curr.DateOfBirth}'|'{curr.Salary}'|'{curr.Address.City}'|'{curr.Address.Street}'|'{curr.Address.Building}'|'{curr.Address.Flat}'|'{curr.Tips}'\r\n";
+                    }
+                    else if (Workers[i] is Manager)
+                    {
+                        Manager curr = Workers[i] as Manager;
+                        text += $"'Менеджер'|'{curr.Surname}'|'{curr.Name}'|'{curr.Phone}'|'{curr.DateOfBirth}'|'{curr.Salary}'|'{curr.Address.City}'|'{curr.Address.Street}'|'{curr.Address.Building}'|'{curr.Address.Flat}'|'{curr.Suborditates}'\r\n";
+                    }
+                    else if (Workers[i] is Chief)
+                    {
+                        Chief curr = Workers[i] as Chief;
+                        text += $"'Шеф-повар'|'{curr.Surname}'|'{curr.Name}'|'{curr.Phone}'|'{curr.DateOfBirth}'|'{curr.Salary}'|'{curr.Address.City}'|'{curr.Address.Street}'|'{curr.Address.Building}'|'{curr.Address.Flat}'|'{curr.Category}'|'{curr.SignatureDish}'|'{curr.SwearLikeGordon}'\r\n";
+                    }
+                    else if (Workers[i] is Cook)
+                    {
+                        Cook curr = Workers[i] as Cook;
+                        text += $"'Менеджер'|'{curr.Surname}'|'{curr.Name}'|'{curr.Phone}'|'{curr.DateOfBirth}'|'{curr.Salary}'|'{curr.Address.City}'|'{curr.Address.Street}'|'{curr.Address.Building}'|'{curr.Address.Flat}'|'{curr.Category}'\r\n";
+                    }
+                    else
+                    {
+                        RestaurantWorker curr = Workers[i] as RestaurantWorker;
+                        text += $"'Не уточнено'|'{curr.Surname}'|'{curr.Name}'|'{curr.Phone}'|'{curr.DateOfBirth}'|'{curr.Salary}'|'{curr.Address.City}'|'{curr.Address.Street}'|'{curr.Address.Building}'|'{curr.Address.Flat}'\r\n";
+                    }
+                }
+                using (FileStream fs = new FileStream("workers.txt", FileMode.OpenOrCreate))
+                {
+                    byte[] array = Encoding.Default.GetBytes(text);
+                    fs.Write(array, 0, array.Length);
+                }
+            }
+        }
+
+        private void buttonDeserialize_Click(object sender, EventArgs e)
+        {
+            Workers.Clear();
+            if (radioButtonBinary.Checked)
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                using (FileStream fs = new FileStream("workers.dat", FileMode.OpenOrCreate))
+                {
+                    Workers = (List<RestaurantWorker>)formatter.Deserialize(fs);
+                }
+            }
+            else if (radioButtonXml.Checked)
+            {
+                XmlSerializer formatter = new XmlSerializer(typeof(List<RestaurantWorker>), new Type[] { typeof(Waiter), typeof(Manager), typeof(Chief), typeof(Cook) });
+                using (FileStream fs = new FileStream("workers.xml", FileMode.OpenOrCreate))
+                {
+                    Workers = (List<RestaurantWorker>)formatter.Deserialize(fs);
+                }
+            }
+            if (radioButtonFree.Checked)
+            {
+                using (StreamReader sr = new StreamReader("workers.txt", System.Text.Encoding.Default))
+                {
+                    while (!sr.EndOfStream)
+                    {
+                        string[] line = sr.ReadLine().Split('|');
+                        string clName = line[0].Substring(1, line[0].Length - 2);
+                        string surname = line[1].Substring(1, line[1].Length - 2);
+                        string name = line[2].Substring(1, line[2].Length - 2);
+                        string phone = line[3].Substring(1, line[3].Length - 2);
+                        DateTime dateOfBirth = Convert.ToDateTime(line[4].Substring(1, line[4].Length - 2));
+                        double salary = Convert.ToDouble(line[5].Substring(1, line[5].Length - 2));
+                        string city = line[6].Substring(1, line[6].Length - 2);
+                        string street = line[7].Substring(1, line[7].Length - 2);
+                        int building = Convert.ToInt32(line[8].Substring(1, line[8].Length - 2));
+                        int flat = Convert.ToInt32(line[9].Substring(1, line[9].Length - 2));
+                        int firstparam = 0;
+                        string secondparam = "";
+                        bool swear = false;
+                        if (clName != "Не уточнено")
+                            firstparam = Convert.ToInt32(line[10].Substring(1, line[10].Length - 2));
+                        if (clName == "Шеф-повар")
+                        {
+                            secondparam = line[11].Substring(1, line[11].Length - 2);
+                            swear = Convert.ToBoolean(line[12].Substring(1, line[12].Length - 2));
+                        }
+
+                        Address currAddr = new Address(city, street, building, flat);
+                        RestaurantWorker worker = getWorkerTypeByString(clName, name, surname, dateOfBirth, phone, currAddr, salary, firstparam, secondparam, swear);
+                        Workers.Add(worker);
+                    }
+                } 
+            }
+
+            dataGridAndAllListsUpdate();
         }
     }
 }

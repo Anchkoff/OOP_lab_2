@@ -6,12 +6,15 @@ using System.Threading.Tasks;
 
 namespace Lab_2_OOTP
 {
-    class Cook: RestaurantWorker
+    [Serializable]
+    public class Cook : RestaurantWorker
     {
         public int Category
         {
             get; set;
         }
+
+        public Cook() { }
 
         public Cook(string name, string surname, DateTime dateOfBirth, string phone, Address address, double salary, int category)
             : base(name, surname, dateOfBirth, phone, address, salary)

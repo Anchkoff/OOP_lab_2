@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Lab_2_OOTP
 {
-    class Chief: Cook
+    [Serializable]
+    public class Chief : Cook
     {
         public bool SwearLikeGordon
         {
@@ -16,6 +17,9 @@ namespace Lab_2_OOTP
         {
             get; set;
         }
+
+        public Chief() { }
+
         public Chief(string name, string surname, DateTime dateOfBirth, string phone, Address address, double salary, int category, bool swearLikeGordon, string signatureDish) : base(name, surname, dateOfBirth, phone, address, salary, category)
         {
             SwearLikeGordon = swearLikeGordon;

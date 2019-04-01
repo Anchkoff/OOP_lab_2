@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Lab_2_OOTP
 {
-    class RestaurantWorker
+    [Serializable]
+    public class RestaurantWorker
     {
         public string Name
         {
@@ -32,6 +33,9 @@ namespace Lab_2_OOTP
         {
             get; set;
         }
+
+        public RestaurantWorker() { }
+
         public RestaurantWorker(string name, string surname, DateTime dateOfBirth, string phone, Address address, double salary)
         {
             Name = name;

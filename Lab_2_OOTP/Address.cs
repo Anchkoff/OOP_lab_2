@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Lab_2_OOTP
 {
-    class Address
+    [Serializable]
+    public class Address
     {
         public string City
         {
@@ -24,6 +25,7 @@ namespace Lab_2_OOTP
         {
             get; set;
         }
+        public Address() { }
         public Address(string city, string street, int building)
         {
             City = city;
